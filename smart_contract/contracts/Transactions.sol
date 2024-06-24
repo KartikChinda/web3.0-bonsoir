@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 
 // serving the purpose of a class. Solidity is also statically typed.
 contract Transactions {
-    uint256 transactionCounter;
+    uint256 transactionCount;
 
     // this is essentially a function declaration.
     event Transfer(
@@ -29,19 +29,48 @@ contract Transactions {
     // here is our global store.
     TransferStruct[] transactions;
 
-    // creating functions
+    function addToBlockchain(
+        address payable receiver,
+        uint amount,
+        string memory message,
+        string memory keyword
+    ) public {
+        transactionCount += 1;
 
-    function addToBlockchain() public {}
+        // msg is smth you immediately get when you call a function in the blockchain. It is identical to a req.body you'd get in REST.
+        // block is the specific block that got executed in the blockchain when this was called.
+        transactions.push(
+            TransferStruct(
+                msg.sender,
+                receiver,
+                amount,
+                message,
+                block.timestamp,
+                keyword
+            )
+        );
+
+        // calling the event that actually makes the payment.
+        emit Transfer(
+            msg.sender,
+            receiver,
+            amount,
+            message,
+            block.timestamp,
+            keyword
+        );
+    }
 
     function getAllTransactions()
         public
         view
         returns (TransferStruct[] memory)
     {
-        // return transactions;
+        return transactions;
     }
 
     function getTransactionCount() public view returns (uint256) {
         // returns the current transaction count.
+        return transactionCount;
     }
 }

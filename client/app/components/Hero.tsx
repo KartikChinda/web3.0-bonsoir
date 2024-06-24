@@ -78,7 +78,20 @@ const Hero = () => {
                             </div>
                         </div>
                     </div>
+                    <form id="sendMoney" onSubmit={(e) => handleSubmit(e)} className="p-5 sm:w-96 w-full flex flex-col justify-start items-center blue-glassmorphism gap-2" >
+                        <input placeholder="Enter address to send the amount to" name="addressTo" type="text" className=" p-2 w-full rounded-lg my-2 blue-glassmorphism" />
+                        <input placeholder="Enter the amount (ETH)" name="amount" type="number" className=" p-2 w-full rounded-lg my-2 blue-glassmorphism" />
+                        <input placeholder="Enter a keyword" name="keyword" type="text" className=" p-2 w-full rounded-lg my-2 blue-glassmorphism" />
+                        <input placeholder="Enter a message" name="message" type="text" className=" p-2 w-full rounded-lg my-2 blue-glassmorphism" />
 
+                        <button
+                            type="button"
+                            onClick={handleSubmit}
+                            className="text-white w-full  mt-2  p-2 hover:bg-[#4F4EBE] rounded-full duration-150 cursor-pointer hover:font-bold"
+                        >
+                            Send now
+                        </button>
+                    </form>
 
                 </div>
             </div>

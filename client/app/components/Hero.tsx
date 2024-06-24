@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from "react";
+import React from "react";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { SiEthereum } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
@@ -79,10 +79,10 @@ const Hero = () => {
                         </div>
                     </div>
                     <form id="sendMoney" onSubmit={(e) => handleSubmit(e)} className="p-5 sm:w-96 w-full flex flex-col justify-start items-center blue-glassmorphism gap-2" >
-                        <input placeholder="Enter address to send the amount to" name="addressTo" type="text" className=" p-2 w-full rounded-lg my-2 blue-glassmorphism" />
-                        <input placeholder="Enter the amount (ETH)" name="amount" type="number" className=" p-2 w-full rounded-lg my-2 blue-glassmorphism" />
-                        <input placeholder="Enter a keyword" name="keyword" type="text" className=" p-2 w-full rounded-lg my-2 blue-glassmorphism" />
-                        <input placeholder="Enter a message" name="message" type="text" className=" p-2 w-full rounded-lg my-2 blue-glassmorphism" />
+                        <input placeholder="Enter address to send the amount to" name="addressTo" type="text" className=" p-2 w-full rounded-lg my-2 blue-glassmorphism text-white" />
+                        <input placeholder="Enter the amount (ETH)" name="amount" type="number" className=" p-2 w-full rounded-lg my-2 blue-glassmorphism text-white" />
+                        <input placeholder="Enter a keyword" name="keyword" type="text" className=" p-2 w-full rounded-lg my-2 blue-glassmorphism text-white" />
+                        <input placeholder="Enter a message" name="message" type="text" className=" p-2 w-full rounded-lg my-2 blue-glassmorphism text-white" />
 
                         <button
                             type="button"

@@ -1,5 +1,13 @@
-## Smart contract notes 
+# Sample Hardhat Project
 
-- These are the notes for the smart contract that I will need for future references. 
+This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
 
-- Hardhat is essentially used to enable you to run solidity locally, kind of like nodeJs for Javascript. 
+Try running some of the following tasks:
+
+```shell
+npx hardhat help
+npx hardhat test
+REPORT_GAS=true npx hardhat test
+npx hardhat node
+npx hardhat ignition deploy ./ignition/modules/Lock.js
+```

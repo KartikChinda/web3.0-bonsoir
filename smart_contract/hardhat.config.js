@@ -1,9 +1,10 @@
 require('dotenv').config()
 
 require("@nomicfoundation/hardhat-toolbox");
+require("@nomicfoundation/hardhat-ethers");
 
 /** @type import('hardhat/config').HardhatUserConfig */
-console.log(process.env.ACCOUNT_KEY)
+
 module.exports = {
   solidity: "0.8.24",
   networks: {

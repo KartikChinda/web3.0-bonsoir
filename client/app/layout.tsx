@@ -1,9 +1,11 @@
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
+import { TransactionProvider } from "./context/TransactionContext";
 
 export const metadata: Metadata = {
   title: "SendCrypto",
@@ -16,11 +18,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className=" gradient-bg-welcome" >
-        <Navbar />
-        {children}
-      </body>
-    </html>
+    <TransactionProvider>
+      <html lang="en">
+        <body className=" gradient-bg-welcome" >
+          <Navbar />
+          {children}
+        </body>
+      </html>
+    </TransactionProvider>
   );
 }

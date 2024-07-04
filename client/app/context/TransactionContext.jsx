@@ -28,10 +28,57 @@ const getEthereumContract = () => {
 
 export const TransactionProvider = ({ children }) => {
 
+    const [currentAccount, setcurrentAccount] = useState("");
+
+    const [formData, setFormData] = useState({
+        addressTo: "", amount: "", keyword: "", message: ""
+    });
+
+    const handleChange = (e, name) => {
+        // console.log("Inside handle change, changing value of name to ", name, e.target.value);
+        setFormData((prev) => ({ ...prev, [name]: e.target.value }));
+    }
+
+    // checking if metamask is connected. 
     const checkWalletConnected = async () => {
         if (!ethereum) return alert("Please install Metamask.");
         const accounts = await ethereum.request({ method: 'eth_accounts' });
+        // checking that if we already have an account connected at the start of the render, we can already set the value of the account. 
+        if (accounts.length > 0) {
+            setcurrentAccount(accounts[0]);
+        } else {
+            console.log("No accounts found");
+        }
         console.log(accounts);
+    }
+
+    // retreiving the first waller. 
+    const connectWallet = async () => {
+        try {
+            if (!ethereum) return alert("Please install Metamask.");
+            const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+            setcurrentAccount(accounts[0]);
+            // console.log(currentAccount);
+        } catch (error) {
+            console.log(error);
+            throw new Error("No ethereum object has been found.");
+        }
+    }
+
+    const sendTransaction = async () => {
+        try {
+            if (!ethereum) return alert("Please install Metamask.");
+
+            // getting form data
+            const { addressTo, amount, keyword, message } = formData;
+
+            // knowing what contract to invoke 
+            getEthereumContract();
+
+        } catch (error) {
+            console.log(error);
+            throw new Error("No ethereum object has been found.");
+        }
     }
 
     useEffect(() => {
@@ -41,7 +88,7 @@ export const TransactionProvider = ({ children }) => {
 
 
     return (
-        <TransactionContext.Provider value={{ value: "testing testing hello 123 awaaz aa rhi h?" }}>
+        <TransactionContext.Provider value={{ connectWallet, currentAccount, formData, sendTransaction, handleChange }}>
             {children}
         </TransactionContext.Provider>
     )

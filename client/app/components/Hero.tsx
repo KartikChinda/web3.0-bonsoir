@@ -10,17 +10,19 @@ const companyCommonStyles = "min-h-[70px] sm:px-0 px-2 sm:min-w-[120px] flex jus
 
 const Hero = () => {
 
-    const { value } = useContext(TransactionContext);
-    console.log(value);
+    const { connectWallet, currentAccount, formData, setFormData, handleChange, sendTransaction } = useContext(TransactionContext);
+
 
     const handleSubmit = (e: any) => {
+        const { addressTo, amount, keyword, message } = formData;
+        e.preventDefault();
+        if (!addressTo || !amount || !keyword || !message) return;
 
+        sendTransaction();
     };
 
 
-    const connectWallet = () => {
 
-    }
 
     return (
         <div className="flex w-full justify-center items-center">
@@ -33,7 +35,7 @@ const Hero = () => {
                         Explore the crypto world. Buy and sell cryptocurrencies easily on Krypto.
                     </p>
 
-                    <button
+                    {!currentAccount && <button
                         type="button"
                         onClick={connectWallet}
                         className="flex flex-row justify-center items-center my-5 bg-[#a099ff] p-3 rounded-full cursor-pointer hover:bg-[#8982eb] duration-150"
@@ -42,7 +44,7 @@ const Hero = () => {
                         <p className="text-black text-base font-semibold">
                             Connect Wallet
                         </p>
-                    </button>
+                    </button>}
 
 
                     <div className="grid sm:grid-cols-3 grid-cols-2 w-full mt-10">
@@ -83,10 +85,10 @@ const Hero = () => {
                         </div>
                     </div>
                     <form id="sendMoney" onSubmit={(e) => handleSubmit(e)} className="p-5 sm:w-96 w-full flex flex-col justify-start items-center blue-glassmorphism gap-2" >
-                        <input placeholder="Enter address to send the amount to" name="addressTo" type="text" className=" p-2 w-full rounded-lg my-2 blue-glassmorphism text-white" />
-                        <input placeholder="Enter the amount (ETH)" name="amount" type="number" className=" p-2 w-full rounded-lg my-2 blue-glassmorphism text-white" />
-                        <input placeholder="Enter a keyword" name="keyword" type="text" className=" p-2 w-full rounded-lg my-2 blue-glassmorphism text-white" />
-                        <input placeholder="Enter a message" name="message" type="text" className=" p-2 w-full rounded-lg my-2 blue-glassmorphism text-white" />
+                        <input placeholder="Enter address to send the amount to" name="addressTo" onChange={(e) => handleChange(e, "addressTo")} type="text" className=" p-2 w-full rounded-lg my-2 blue-glassmorphism text-white" />
+                        <input placeholder="Enter the amount (ETH)" name="amount" onChange={(e) => handleChange(e, "amount")} type="number" className=" p-2 w-full rounded-lg my-2 blue-glassmorphism text-white" />
+                        <input placeholder="Enter a keyword" name="keyword" onChange={(e) => handleChange(e, "keyword")} type="text" className=" p-2 w-full rounded-lg my-2 blue-glassmorphism text-white" />
+                        <input placeholder="Enter a message" name="message" onChange={(e) => handleChange(e, "message")} type="text" className=" p-2 w-full rounded-lg my-2 blue-glassmorphism text-white" />
 
                         <button
                             type="button"

@@ -937,6 +937,9 @@ video {
 .text-left {
   text-align: left;
 }
+.text-center {
+  text-align: center;
+}
 .font-sans {
   font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
@@ -1069,5 +1072,16 @@ video {
 
   .md\:p-20 {
     padding: 5rem;
+  }
+
+  .md\:p-12 {
+    padding: 3rem;
+  }
+}
+@media (min-width: 1536px) {
+
+  .\32xl\:px-20 {
+    padding-left: 5rem;
+    padding-right: 5rem;
   }
 }

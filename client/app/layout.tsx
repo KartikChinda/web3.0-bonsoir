@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <TransactionProvider>
       <html lang="en">
-        <body className=" gradient-bg-welcome" >
+        <body className="gradient-bg-welcome" >
           <Navbar />
           {children}
         </body>

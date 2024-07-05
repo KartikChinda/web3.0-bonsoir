@@ -76,7 +76,7 @@ const Hero = () => {
                             </div>
                             <div>
                                 <p className="text-black font-md text-sm">
-                                    Address of the account
+                                    {currentAccount.substr(0, 10)}........{currentAccount.substr(currentAccount.length - 5, currentAccount.length - 1)}
                                 </p>
                                 <p className="text-black font-bold text-lg mt-1">
                                     Ethereum

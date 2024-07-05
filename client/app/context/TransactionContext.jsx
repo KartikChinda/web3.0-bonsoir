@@ -31,7 +31,7 @@ export const TransactionProvider = ({ children }) => {
 
     const [currentAccount, setcurrentAccount] = useState("");
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [transactions, settransactions] = useState([])
 
     const [formData, setFormData] = useState({
         addressTo: "", amount: "", keyword: "", message: ""
@@ -42,10 +42,39 @@ export const TransactionProvider = ({ children }) => {
         setFormData((prev) => ({ ...prev, [name]: e.target.value }));
     }
 
+    // fetching all transactions 
+    const getTransactions = async () => {
+        try {
+            if (!ethereum) return alert("Please install Metamask");
+
+            const transactionContract = await getEthereumContract();
+            const transactionsList = await transactionContract.getAllTransactions();
+
+            // Transform the transactions list to a more usable format
+            const formattedTransactions = transactionsList.map(transaction => ({
+                sender: transaction.sender,
+                receiver: transaction.receiver,
+                amount: transaction.amount.toString() / (10 ** 18),  // Dividing by 10^18 so that we can get the value in Eth, and not in GWEI
+                message: transaction.message,
+                timestamp: new Date(Number(transaction.timestamp) * 1000).toLocaleString(),  // Convert BigInt to number then to Date object
+                keyword: transaction.keyword
+            }));
+
+            console.log(formattedTransactions);
+            settransactions(formattedTransactions);
+
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     // checking if metamask is connected. 
     const checkWalletConnected = async () => {
         if (!ethereum) return alert("Please install Metamask.");
         const accounts = await ethereum.request({ method: 'eth_accounts' });
+
+
         // checking that if we already have an account connected at the start of the render, we can already set the value of the account. 
         if (accounts.length > 0) {
             setcurrentAccount(accounts[0]);
@@ -53,6 +82,7 @@ export const TransactionProvider = ({ children }) => {
             console.log("No accounts found");
         }
         console.log(accounts);
+        getTransactions();
     }
 
     // retreiving the first waller. 
@@ -68,6 +98,8 @@ export const TransactionProvider = ({ children }) => {
         }
     }
 
+
+
     const sendTransaction = async () => {
         try {
             if (!ethereum) return alert("Please install Metamask.");
@@ -76,7 +108,7 @@ export const TransactionProvider = ({ children }) => {
             const { addressTo, amount, keyword, message } = formData;
 
             // knowing what contract to invoke 
-            const transactionContract = getEthereumContract();
+            const transactionContract = await getEthereumContract();
 
             // sim reason as to what is explained below, this passes your amount into GWEI hexadecimal amount. 
             console.log("Amount is: ", amount, "type: ", typeof (amount));
@@ -98,9 +130,7 @@ export const TransactionProvider = ({ children }) => {
 
             // adding to the blockchain 
             const transactionHash = await transactionContract.addToBlockchain(addressTo, parsedAmount, message, keyword);
-
             console.log("This is your transaction hash: ", transactionHash.hash);
-
 
         } catch (error) {
             console.log(error);
@@ -115,7 +145,7 @@ export const TransactionProvider = ({ children }) => {
 
 
     return (
-        <TransactionContext.Provider value={{ connectWallet, currentAccount, formData, sendTransaction, handleChange }}>
+        <TransactionContext.Provider value={{ connectWallet, currentAccount, formData, sendTransaction, handleChange, transactions }}>
             {children}
         </TransactionContext.Provider>
     )

@@ -4,8 +4,7 @@ import Transactions from "./components/Transactions";
 
 export default function Home() {
   return (
-    <main className="w-full h-screen">
-
+    <main className="w-full h-full ">
       <Hero />
       <Transactions />
     </main>
